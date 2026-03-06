@@ -2,7 +2,7 @@ resource "aws_instance" "mongodb" {
   ami                    = local.ami_id
   instance_type          = var.instance_type
   subnet_id              = local.db_private_subnet_ids
-  vpc_security_group_ids = local.mongodbsg_id
+  vpc_security_group_ids = [local.mongodbsg_id]
   tags = merge(local.common_tags, {
     Name = "${var.project}-${var.env}-mongodb" }
   )
@@ -15,7 +15,7 @@ resource "terraform_data" "bootstrap" {
    connection {
       type = "ssh"
       user = "ec2-user"
-      password = "DevOPs321"
+      password = "DevOps321"
       host = aws_instance.mongodb.private_ip
    }
 
@@ -37,7 +37,7 @@ resource "aws_instance" "redis" {
   subnet_id              = local.db_private_subnet_ids
   vpc_security_group_ids = local.redissg_id
   tags = merge(local.common_tags, {
-    Name = "${var.project}-${var.env}-redis" }
+    Name = "${var.project}-${var.env}-redis"}
   )
 }
 
