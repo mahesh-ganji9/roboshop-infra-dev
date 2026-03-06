@@ -23,13 +23,18 @@ resource "terraform_data" "bootstrap" {
      source = "bootstrap.sh"
      destination = "/tmp/bootstrap.sh"
    }
+#    provisioner "remote-exec" {
+#       inline = [ 
+#         "chmod +x /tmp/bootstrap.sh",
+#         "sudo sh /tmp/bootstrap.sh"
+#        ]
+#    }
    provisioner "remote-exec" {
       inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh"
+        "sudo sh /tmp/bootstrap.sh mongodb"
        ]
    }
-
 }
 resource "aws_instance" "redis" {
   ami                    = local.ami_id

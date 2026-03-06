@@ -5,10 +5,10 @@ resource "aws_instance" "bastioninstance" {
     vpc_security_group_ids = [ local.bastionsg_id ]
     iam_instance_profile = aws_iam_instance_profile.bastion.name
     tags = local.ec2_final_tags
-    user_data = file(bastion.sh)
+    user_data = file("bastion.sh")
     root_block_device {
           volume_size = 50
-          volume_type = gp3
+          volume_type = "gp3"
           tags = merge(local.common_tags,
           {
             Name = "${var.project}-${var.env}-ebs-volume0"
