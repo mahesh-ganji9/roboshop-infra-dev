@@ -8,16 +8,38 @@ resource "aws_instance" "mongodb" {
   )
 }
 
+resource "terraform_data" "bootstrap" {
+   triggers_replace = [
+     aws_instance.mongodb.id
+   ]
+   connection {
+      type = "ssh"
+      user = "ec2-user"
+      password = "DevOPs321"
+      host = aws_instance.mongodb.private_ip
+   }
 
-# resource "aws_instance" "redis" {
-#   ami                    = local.ami_id
-#   instance_type          = var.instance_type
-#   subnet_id              = local.db_private_subnet_ids
-#   vpc_security_group_ids = local.redissg_id
-#   tags = merge(local.common_tags, {
-#     Name = "${var.project}-${var.env}-redis" }
-#   )
-# }
+   provisioner "file" {
+     source = "bootstrap.sh"
+     destination = "/tmp/bootstrap.sh"
+   }
+   provisioner "remote-exec" {
+      inline = [ 
+        "chmod +x /tmp/bootstrap.sh",
+        "sudo sh /tmp/bootstrap.sh"
+       ]
+   }
+
+}
+resource "aws_instance" "redis" {
+  ami                    = local.ami_id
+  instance_type          = var.instance_type
+  subnet_id              = local.db_private_subnet_ids
+  vpc_security_group_ids = local.redissg_id
+  tags = merge(local.common_tags, {
+    Name = "${var.project}-${var.env}-redis" }
+  )
+}
 
 # resource "aws_instance" "mysql" {
 #   ami                    = local.ami_id
