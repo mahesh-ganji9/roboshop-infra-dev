@@ -1,5 +1,5 @@
 resource "aws_iam_role" "mysql" {
-  name = "${var.project}-${var.env}-mysql-role"
+  name = local.mysql_role_name
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -24,7 +24,7 @@ resource "aws_iam_role" "mysql" {
 
 
 resource "aws_iam_policy" "sql_policy" {
-  name = "${var.project}-${var.env}-mysql-policy"
+  name = local.mysql_role_policy
   policy = templatefile("mysql-iam-policy.json", {
       env = var.env
   })
@@ -38,5 +38,5 @@ resource "aws_iam_role_policy_attachment" "mysql_policy_attach" {
 
 resource "aws_iam_instance_profile" "mysql_instance_profile" {
    name = "${var.project}-${var.env}-mysql-profile"
-   role = aws_iam_role.mysql
+   role = aws_iam_role.mysql.name
 }
