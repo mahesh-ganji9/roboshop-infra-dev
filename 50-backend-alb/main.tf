@@ -3,14 +3,15 @@ resource "aws_lb" "test" {
   internal           = true
   load_balancer_type = "application"
   security_groups    = [local.backend_alb_sg_id]
-  subnets            = local.backend_alb_sg_id
+  subnets            =  local.private_subnet_ids
   enable_deletion_protection = false
 
 
   tags = merge(local.common_tags,
          {
             Name = "${var.project}-${var.env}-alb"
-         })
+         }
+         )
   
 }
 
@@ -33,7 +34,7 @@ resource "aws_route53_record" "www" {
    type = "A"
    name = "*.backend-alb-${var.env}.${var.domain_name}"
    alias {
-      evaluate_target_health = yes
+      evaluate_target_health = true
       name =    aws_lb.test.dns_name
       zone_id = aws_lb.test.zone_id
    }
