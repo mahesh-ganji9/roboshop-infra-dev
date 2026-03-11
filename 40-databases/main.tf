@@ -4,7 +4,7 @@ resource "aws_instance" "mongodb" {
   subnet_id              = local.db_private_subnet_ids
   vpc_security_group_ids = [local.mongodbsg_id]
   tags = merge(local.common_tags, {
-    Name = "${var.project}-${var.env}-mongodb" }
+    Name = "${var.project}-${var.env}-mongodb"}
   )
 }
 
