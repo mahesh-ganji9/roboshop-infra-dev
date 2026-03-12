@@ -1,4 +1,4 @@
-resource "aws_lb" "test" {
+resource "aws_lb" "main" {
   name               = "${var.project}-${var.env}-alb"
   internal           = true
   load_balancer_type = "application"
@@ -16,7 +16,7 @@ resource "aws_lb" "test" {
 }
 
 resource "aws_lb_listener" "http" {
-   load_balancer_arn = aws_lb.test.arn
+   load_balancer_arn = aws_lb.main.arn
    port = 80
    protocol = "HTTP"
    default_action {
@@ -35,7 +35,8 @@ resource "aws_route53_record" "www" {
    name = "*.backend-alb-${var.env}.${var.domain_name}"
    alias {
       evaluate_target_health = true
-      name =    aws_lb.test.dns_name
-      zone_id = aws_lb.test.zone_id
+      name =    aws_lb.main.dns_name
+      zone_id = aws_lb.main.zone_id
    }
 }
+
