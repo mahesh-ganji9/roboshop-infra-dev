@@ -2,7 +2,7 @@ resource "aws_instance" "catalogue" {
   ami                    = local.ami_id
   instance_type          = var.instance_type
   subnet_id              = local.private_subnet_ids
-  vpc_security_group_ids = local.catalogue_sg_id
+  vpc_security_group_ids = [local.catalogue_sg_id ]
   tags = merge(local.common_tags, {
     Name = "${var.project}-${var.env}-catalogue"}
   )
