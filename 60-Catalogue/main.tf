@@ -41,3 +41,10 @@ resource "aws_ec2_instance_state" "catalogue_state" {
   instance_id = aws_instance.catalogue.id
   state       = "stopped"
 }
+
+resource "aws_ami_from_instance" "catalogue_ami" {
+  name               = "${var.project}-${var.env}-catalogue-ami"
+  source_instance_id = aws_instance.catalogue.id
+
+  depends_on = [ aws_ec2_instance_state.catalogue_state ]
+}
