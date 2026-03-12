@@ -6,6 +6,10 @@ data "aws_ssm_parameter" "Catalogue_sg_id" {
    name = "/${var.project}/${var.env}/Catalogue_sg_id"
 }
 
+data "aws_ssm_parameter" "vpc_id" {
+  name = "/${var.project}/${var.env}/vpc_id"
+}
+
 data "aws_ami" "ami_data" {
   owners      = ["973714476881"]
   most_recent = true
