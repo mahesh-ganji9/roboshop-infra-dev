@@ -143,3 +143,12 @@ resource "aws_lb_listener_rule" "catalogue_lb_rule" {
      }
    }
 }
+
+resource "terraform_data" "catalogue_delete" {
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+  provisioner "local-exec" {
+    command = "aws ec2 instance terminate-instances --instance-ids ${aws_instance.catalogue.id}"
+  }
+}
