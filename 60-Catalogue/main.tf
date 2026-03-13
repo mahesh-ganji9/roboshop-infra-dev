@@ -72,27 +72,27 @@ resource "aws_lb_target_group" "catalogue_targetgrp" {
 
 
 
-# resource "aws_launch_template" "catalogue_template" {
-#   name = "${var.project}-${var.env}-catalogue"
-#   image_id = aws_ami_from_instance.catalogue_ami.id
-#   instance_initiated_shutdown_behavior = "terminate"
-#   instance_type = var.instance_type
-#   vpc_security_group_ids = [local.catalogue_sg_id]
-#   update_default_version = true
-#   tag_specifications {
-#     resource_type = "instance"
+resource "aws_launch_template" "catalogue_template" {
+  name = "${var.project}-${var.env}-catalogue"
+  image_id = aws_ami_from_instance.catalogue_ami.id
+  instance_initiated_shutdown_behavior = "terminate"
+  instance_type = var.instance_type
+  vpc_security_group_ids = [local.catalogue_sg_id]
+  update_default_version = true
+  tag_specifications {
+    resource_type = "instance"
   
-#     tags = merge(local.common_tags, {
-#     Name = "${var.project}-${var.env}-catalogue"}
-#   )
-# }
-#     tag_specifications {
-#     resource_type = "volume"
+    tags = merge(local.common_tags, {
+    Name = "${var.project}-${var.env}-catalogue"}
+  )
+}
+    tag_specifications {
+    resource_type = "volume"
   
-#     tags = merge(local.common_tags, {
-#     Name = "${var.project}-${var.env}-catalogue"}
-#   )
-# }
+    tags = merge(local.common_tags, {
+    Name = "${var.project}-${var.env}-catalogue"}
+  )
+}
 
 # }
 
