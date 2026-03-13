@@ -93,6 +93,7 @@ resource "aws_launch_template" "catalogue_template" {
     Name = "${var.project}-${var.env}-catalogue"}
   )
 }
+}
 
 # }
 
