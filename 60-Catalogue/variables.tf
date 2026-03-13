@@ -15,7 +15,9 @@ variable "tags" {
   default = {}
 }
 
-
+variable "domain_name" {
+  default = "daws88s.shop"
+}
 
 
 

@@ -10,6 +10,10 @@ data "aws_ssm_parameter" "vpc_id" {
   name = "/${var.project}/${var.env}/vpc_id"
 }
 
+data "aws_ssm_parameter" "alb_listener_arn" {
+  name = "/${var.project}/${var.env}/alb_listener_arn"
+}
+
 data "aws_ami" "ami_data" {
   owners      = ["973714476881"]
   most_recent = true
