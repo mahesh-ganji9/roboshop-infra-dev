@@ -71,7 +71,6 @@ resource "aws_lb_target_group" "catalogue_targetgrp" {
 }
 
 
-
 resource "aws_launch_template" "catalogue_template" {
   name = "${var.project}-${var.env}-catalogue"
   image_id = aws_ami_from_instance.catalogue_ami.id
@@ -95,26 +94,25 @@ resource "aws_launch_template" "catalogue_template" {
 }
 }
 
-# }
 
-# resource "aws_autoscaling_group" "catalogue" {
-#   name                      = "${var.project}-${var.env}-catalogue"
-#   max_size                  = 10
-#   min_size                  = 1
-#   health_check_grace_period = 120
-#   health_check_type         = "ALB"
-#   desired_capacity          = 1
-#   force_delete              = false
-#   launch_template {
-#     id = aws_launch_template.catalogue_template.id 
-#     version = "$Latest"
-#   }  
-#   vpc_zone_identifier       = [local.private_subnet_ids]
-#   target_group_arns = [ aws_lb_target_group.catalogue_targetgrp.arn ]
-#   tag {
-#      key = "Name"
-#      value = "${var.project}-${var.env}-catalogue"
-#      propagate_at_launch = false
-#   }
+resource "aws_autoscaling_group" "catalogue" {
+  name                      = "${var.project}-${var.env}-catalogue"
+  max_size                  = 10
+  min_size                  = 1
+  health_check_grace_period = 120
+  health_check_type         = "ELB"
+  desired_capacity          = 1
+  force_delete              = false
+  launch_template {
+    id = aws_launch_template.catalogue_template.id 
+    version = "$Latest"
+  }  
+  vpc_zone_identifier       = [local.private_subnet_ids]
+  target_group_arns = [ aws_lb_target_group.catalogue_targetgrp.arn ]
+  tag {
+     key = "Name"
+     value = "${var.project}-${var.env}-catalogue"
+     propagate_at_launch = false
+  }
 
-# }
+}
