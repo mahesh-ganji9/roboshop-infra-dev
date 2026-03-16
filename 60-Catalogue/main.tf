@@ -12,6 +12,7 @@ resource "terraform_data" "bootstrap" {
    triggers_replace = [
      aws_instance.catalogue.id
    ]
+   depends_on = [ aws_instance.catalogue ]
    connection {
       type = "ssh"
       user = "ec2-user"
@@ -148,7 +149,7 @@ resource "terraform_data" "catalogue_delete" {
   triggers_replace = [
     aws_instance.catalogue.id
   ]
-  depends_on = [ terraform_data.bootstrap ]
+  depends_on = [ aws_ami_from_instance.catalogue_ami ]
   provisioner "local-exec" {
     command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
   }
