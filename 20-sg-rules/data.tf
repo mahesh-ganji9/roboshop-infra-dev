@@ -54,6 +54,6 @@ name = "/${var.project}/${var.env}/cart_sg_id"
 
 
 data "http" "icanhazip" {
-  url = "http://icanhazip.com"
+  url = "http://ipv4.icanhazip.com"
 }
 
