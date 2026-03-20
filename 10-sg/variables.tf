@@ -12,7 +12,7 @@ variable "sg_name" {
     #Database
     "mongodb", "redis", "mysql", "rabbitmq",
     #Backend
-    "Catalogue", "user", "cart", "shipping", "payment",
+    "catalogue", "user", "cart", "shipping", "payment",
     #Frontend
     "frontend",
     #ALB
