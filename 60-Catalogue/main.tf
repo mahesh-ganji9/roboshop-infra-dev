@@ -33,7 +33,7 @@ resource "terraform_data" "bootstrap" {
    provisioner "remote-exec" {
       inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh catalogue ${var.env}"
+        "sudo sh /tmp/bootstrap.sh catalogue ${var.env} ${var.app_version}"
        ]
    }
 }
@@ -59,6 +59,7 @@ resource "aws_lb_target_group" "catalogue_targetgrp" {
   port     = 8080
   protocol = "HTTP"
   vpc_id   = local.vpc_id
+  deregistration_delay = 60
   health_check {
     healthy_threshold = 2
     unhealthy_threshold = 3
