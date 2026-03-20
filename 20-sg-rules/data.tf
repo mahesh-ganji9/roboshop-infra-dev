@@ -20,8 +20,8 @@ data "aws_ssm_parameter" "rabbitmq" {
 name = "/${var.project}/${var.env}/rabbitmq_sg_id"
 }
 
-data "aws_ssm_parameter" "Catalogue" {
-name = "/${var.project}/${var.env}/Catalogue_sg_id"
+data "aws_ssm_parameter" "catalogue" {
+name = "/${var.project}/${var.env}/catalogue_sg_id"
 }
 
 data "aws_ssm_parameter" "user" {
