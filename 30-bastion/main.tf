@@ -6,6 +6,7 @@ resource "aws_instance" "bastioninstance" {
     iam_instance_profile = aws_iam_instance_profile.bastion.name
     tags = local.ec2_final_tags
     user_data = file("bastion.sh")
+    associate_public_ip_address = true
     root_block_device {
           volume_size = 50
           volume_type = "gp3"
