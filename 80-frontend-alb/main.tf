@@ -1,5 +1,5 @@
 resource "aws_lb" "frontend" {
-  name               = "${var.project}-${var.env}-alb"
+  name               = "frontend-alb-${var.env}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [local.frontend_alb_sg_id]

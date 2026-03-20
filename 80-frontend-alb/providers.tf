@@ -9,7 +9,7 @@ terraform {
   backend "s3" {
     encrypt      = true
     bucket       = "terraform-devops88s"
-    key          = "terraform-devops88s-backend-alb.tfstate"
+    key          = "terraform-devops88s-frontend-alb.tfstate"
     use_lockfile = true
     region       = "us-east-1"
   }
