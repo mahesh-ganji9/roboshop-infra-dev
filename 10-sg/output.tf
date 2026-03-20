@@ -1,3 +1,3 @@
 output "sg_ids" {
-  value =  module.sg[*].sg_id 
+  value = module.sg[*].sg_id
 }
