@@ -1,9 +1,9 @@
-resource "aws_lb" "frontend" {
+resource "aws_lb" "backend" {
   name               = "${var.project}-${var.env}-alb"
-  internal           = false
+  internal           = true
   load_balancer_type = "application"
-  security_groups    = [local.frontend_alb_sg_id]
-  subnets            =  local.public_subnet_ids
+  security_groups    = [local.backend_alb_sg_id]
+  subnets            = [local.private_subnet_ids]
   enable_deletion_protection = false
 
 
@@ -15,12 +15,10 @@ resource "aws_lb" "frontend" {
   
 }
 
-resource "aws_lb_listener" "https" {
-   load_balancer_arn = aws_lb.frontend.arn
-   port = 443
-   protocol = "HTTPS"
-   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   =   local.frontend_acm_certificate_arn
+resource "aws_lb_listener" "http" {
+   load_balancer_arn = aws_lb.backend.arn
+   port = 80
+   protocol = "HTTP"
    default_action {
       type = "fixed-response"
       fixed_response {
@@ -34,11 +32,11 @@ resource "aws_lb_listener" "https" {
 resource "aws_route53_record" "www" {
    zone_id = var.zone_id
    type = "A"
-   name = "*.${var.domain_name}"
+   name = "backend-alb-${var.env}.${var.domain_name}"
    alias {
       evaluate_target_health = true
-      name =    aws_lb.frontend.dns_name
-      zone_id = aws_lb.frontend.zone_id
+      name =    aws_lb.backend.dns_name
+      zone_id = aws_lb.backend.zone_id
    }
 }
 

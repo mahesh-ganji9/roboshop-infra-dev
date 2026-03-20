@@ -1,6 +1,6 @@
-resource "aws_ssm_parameter" "frontend_alb_listener_arn" {
-   name = "/${var.project}/${var.env}/frontend_alb_arn"
+resource "aws_ssm_parameter" "backend_alb_listener_arn" {
+   name = "/${var.project}/${var.env}/backend_alb_arn"
    type = "String"
    overwrite = true
-   value = aws_lb_listener.https.arn
+   value = aws_lb_listener.http.arn
 }
