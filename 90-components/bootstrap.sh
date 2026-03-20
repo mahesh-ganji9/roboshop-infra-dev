@@ -8,4 +8,4 @@ cd /home/ec2-user
 git clone https://github.com/mahesh-ganji9/ansible-roboshop-roles-tf.git
 cd ansible-roboshop-roles-tf
 git pull
-ansible-playbook -e component=$Component -e env=$env app_version=$3 roboshop.yaml
+ansible-playbook -e component=$Component -e env=$env -e app_version=$3 roboshop.yaml
